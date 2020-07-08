@@ -1,8 +1,46 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/bg.jpg" type="Texture" id=1]
 [ext_resource path="res://scripts/game.gd" type="Script" id=2]
 [ext_resource path="res://scripts/input_process.gd" type="Script" id=3]
+[ext_resource path="res://assets/hp.png" type="Texture" id=4]
+[ext_resource path="res://assets/xbg.png" type="Texture" id=5]
+[ext_resource path="res://assets/x.png" type="Texture" id=6]
+[ext_resource path="res://assets/font.tres" type="DynamicFont" id=7]
+[ext_resource path="res://assets/font2.tres" type="DynamicFont" id=8]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Popup
+
+var can = false
+
+func _input(event):
+	if event is InputEventScreenTouch and can:
+		get_tree().reload_current_scene()
+
+func start():
+	show()
+	$animation.play(\"game_over\")
+	$timer.start()
+
+func _on_timer_timeout():
+	can = true
+"
+
+[sub_resource type="Animation" id=2]
+resource_name = "game_over"
+tracks/0/type = "value"
+tracks/0/path = NodePath("press:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="game" type="Node2D"]
 script = ExtResource( 2 )
@@ -29,6 +67,145 @@ wait_time = 0.1
 
 [node name="limit" type="Timer" parent="input_process"]
 wait_time = 2.0
+
+[node name="ui" type="Control" parent="."]
+margin_right = 1280.0
+margin_bottom = 720.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hp" type="TextureRect" parent="ui"]
+margin_left = 15.0
+margin_top = 15.0
+margin_right = 215.0
+margin_bottom = 215.0
+rect_scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 4 )
+
+[node name="lbl_score" type="Label" parent="ui"]
+margin_left = 108.97
+margin_top = 10.4153
+margin_right = 296.97
+margin_bottom = 110.415
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 1, 0.756863, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="xbg0" type="TextureRect" parent="ui"]
+margin_left = 1190.0
+margin_top = 15.0
+margin_right = 1700.0
+margin_bottom = 618.0
+rect_scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="xbg1" type="TextureRect" parent="ui"]
+margin_left = 1115.0
+margin_top = 15.0
+margin_right = 1625.0
+margin_bottom = 618.0
+rect_scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="xbg2" type="TextureRect" parent="ui"]
+margin_left = 1040.0
+margin_top = 15.0
+margin_right = 1550.0
+margin_bottom = 618.0
+rect_scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="x0" type="TextureRect" parent="ui"]
+visible = false
+margin_left = 1196.0
+margin_top = 21.0
+margin_right = 1661.0
+margin_bottom = 579.0
+rect_scale = Vector2( 0.14, 0.14 )
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="x1" type="TextureRect" parent="ui"]
+visible = false
+margin_left = 1121.0
+margin_top = 21.0
+margin_right = 1586.0
+margin_bottom = 579.0
+rect_scale = Vector2( 0.14, 0.14 )
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="x2" type="TextureRect" parent="ui"]
+visible = false
+margin_left = 1046.0
+margin_top = 21.0
+margin_right = 1511.0
+margin_bottom = 579.0
+rect_scale = Vector2( 0.14, 0.14 )
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="game_over" type="Popup" parent="."]
+visible = true
+margin_right = 1280.0
+margin_bottom = 720.0
+script = SubResource( 1 )
+
+[node name="game_over" type="Label" parent="game_over"]
+margin_top = 285.0
+margin_right = 1280.0
+margin_bottom = 385.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 1, 0.756863, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "GAME OVER"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="press" type="Label" parent="game_over"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 370.0
+margin_right = 1280.0
+margin_bottom = 470.0
+custom_fonts/font = ExtResource( 8 )
+custom_colors/font_color = Color( 1, 0.756863, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "Toque para jogar novamente"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="animation" type="AnimationPlayer" parent="game_over"]
+anims/game_over = SubResource( 2 )
+
+[node name="timer" type="Timer" parent="game_over"]
+wait_time = 2.0
 [connection signal="timeout" from="generator" to="." method="_on_generator_timeout"]
 [connection signal="timeout" from="input_process/interval" to="input_process" method="_on_interval_timeout"]
 [connection signal="timeout" from="input_process/limit" to="input_process" method="_on_limit_timeout"]
+[connection signal="timeout" from="game_over/timer" to="game_over" method="_on_timer_timeout"]

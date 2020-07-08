@@ -10,7 +10,7 @@ onready var half_right_sprite = $half_right/sprite
 var cutted = false
 
 signal score
-signal life
+signal mistake
 
 func _ready():
 	randomize()
@@ -18,7 +18,7 @@ func _ready():
 
 func _process(delta):
 	if position.y > 800:
-		emit_signal("life")
+		emit_signal("mistake")
 		queue_free()
 	if half_left.position.y > 800 and half_right.position.y > 800:
 		queue_free()

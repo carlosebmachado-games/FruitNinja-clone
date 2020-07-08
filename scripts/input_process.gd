@@ -7,10 +7,11 @@ var pressed = false
 var dragging = false
 var cur_pos = Vector2.ZERO
 var old_pos = Vector2.ZERO
+var end_game = false
 
 func _physics_process(delta):
 	update()
-	if dragging and cur_pos != old_pos and old_pos != Vector2.ZERO:
+	if dragging and cur_pos != old_pos and old_pos != Vector2.ZERO and not end_game:
 		var space_state = get_world_2d().get_direct_space_state()
 		var result = space_state.intersect_ray(old_pos, cur_pos)
 		if not result.empty():
@@ -51,5 +52,5 @@ func _on_limit_timeout():
 	release()
 
 func _draw():
-	if dragging and cur_pos != old_pos and old_pos != Vector2.ZERO:
+	if dragging and cur_pos != old_pos and old_pos != Vector2.ZERO and not end_game:
 		draw_line(cur_pos, old_pos, Color(1, 0, 0), 10)
